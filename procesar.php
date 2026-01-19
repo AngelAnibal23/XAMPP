@@ -1,19 +1,30 @@
 <?php
 include 'BDadministrator.php'; 
 
-$usuario = mysqli_real_escape_string($connection, $_POST['usuario']); 
-$email = mysqli_real_escape_string($connection, $_POST['correo']); 
-$password =  $_POST['contraseña'];  
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $usuario = $_POST['usuario']; 
+    $email = $_POST['correo']; 
+    $password =  $_POST['contraseña'];  
 
-$encrypted_pass = password_hash($password, PASSWORD_DEFAULT); 
+    $encrypted_pass = password_hash($password, PASSWORD_DEFAULT); 
 
-$sql = "INSERT INTO usuarios(usuario, password, email)
-        VALUES('$usuario', '$email', '$encrypted_pass')"; 
+    //CREO MI PLANTILLA 
+    $sql = "INSERT INTO usuarios(usuario, password, email)
+            VALUES (?,?,?)"; 
 
-$response = mysqli_query($connection, $sql);
+    //LE AVISO A MYSQL QUE LE LLEGARA UNA QUERY
+    $stmt = mysqli_prepare($connection, $sql); 
 
-if(!$response) echo "Error al ejecutar la query" .  mysqli_error($conexion); 
-else echo "Datos ingresados correctamente a la BD"; 
+    mysqli_stmt_bind_param($stmt, "sss", $usuario, $encrypted_pass, $email); 
+
+
+
+    $response = mysqli_stmt_execute($stmt);
+
+
+    if(!$response) echo "Error al ejecutar la query" .  mysqli_error($conexion); 
+    else echo "Datos ingresados correctamente a la BD"; 
+}
 
 
 mysqli_close($connection);
