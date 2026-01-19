@@ -1,3 +1,16 @@
+<?php
+include 'BDadministrator.php'; 
+
+$usuario = mysqli_real_escape_string($connection, $_POST['usuario']); 
+$email = mysqli_real_escape_string($connection, $_POST['correo']); 
+$password =  $_POST['contraseña'];  
+
+$encrypted_pass = password_hash($password, PASSWORD_DEFAULT)
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +20,6 @@
     <title>Document</title>
 </head>
 <body>
-    <?php
-        echo "<h1> This is sparta </h1>"
-    ?>
+    
 </body>
 </html>
