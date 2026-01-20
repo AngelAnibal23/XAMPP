@@ -35,10 +35,10 @@ body{
     
 }
 
-div{
-  display: flex; 
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 75vh;
+.form-content {
+    display: none;  /* Ocultar por defecto */
+}
+
+.form-content.active {
+    display: block;  /* Mostrar cuando tiene clase active */
 }
