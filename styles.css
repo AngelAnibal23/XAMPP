@@ -1,180 +1,236 @@
-:root{
-  --bg0:#1a1a1a;
-  --bg1:#262626;
+/* =====================
+   VARIABLES GLOBALES
+   ===================== */
+:root {
+  --bg0: #1a1a1a;
+  --bg1: #262626;
   --panel: rgba(38,38,38,.72);
   --panel2: rgba(38,38,38,.55);
-  --text: black(255,255,255,.92);
+
+  --text: rgba(255,255,255,.92);
   --muted: rgba(255,255,255,.72);
   --line: rgba(255,255,255,.12);
 
-  --red1:#2d7a3e;     /* Verde oscuro (reemplaza Dire) */
-  --red2:#3d9e52;     /* Verde medio-oscuro */
-  --green1:#6bc257;   /* Verde medio-claro (reemplaza Radiant) */
-  --green2:#b8d95a;   /* Verde amarillento */
-
-  --gold1:#b8d95a;    /* Verde amarillento */
-  --gold2:#c5e06d;    /* Verde lima claro */
+  --green-dark: #2d7a3e;
+  --green-mid: #3d9e52;
+  --green-light: #6bc257;
+  --green-yellow: #b8d95a;
 
   --shadow: 0 18px 50px rgba(0,0,0,.6);
   --radius: 16px;
 }
 
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
+/* =====================
+   RESET / BASE
+   ===================== */
+* {
+  box-sizing: border-box;
+}
 
-body{
-   margin:0;
-    padding: clamp(20px, 4vw, 52px);
-    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    color: var(--text);
-    background:
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* =====================
+   BODY / BACKGROUND
+   ===================== */
+body {
+  min-height: 100vh;
+  padding: clamp(20px, 4vw, 52px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: ui-sans-serif, system-ui, -apple-system,
+               "Segoe UI", Roboto, Arial, sans-serif;
+
+  color: var(--text);
+
+  background:
     radial-gradient(1200px 700px at 15% 20%, rgba(45,122,62,.22), transparent 60%),
     radial-gradient(1200px 700px at 85% 25%, rgba(107,194,87,.18), transparent 62%),
     radial-gradient(900px 600px at 50% 105%, rgba(184,217,90,.10), transparent 60%),
     linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 55%, #0d0d0d 100%);
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    
 }
 
+/* =====================
+   TITULOS
+   ===================== */
+h1 {
+  text-align: center;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #888;
+  margin-bottom: 30px;
+}
+
+/* =====================
+   CONTENEDOR PRINCIPAL
+   ===================== */
 .container {
-            max-width: 450px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
+  max-width: 450px;
+  width: 100%;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  color: black;
 }
 
+/* =====================
+   ICONO
+   ===================== */
+.icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #d0f0e0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+}
+
+/* =====================
+   TABS (LOGIN / REGISTER)
+   ===================== */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin: 0 auto 30px;
+  max-width: 450px;
+  color: black;
+  width: 450px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  font-size: 17px;
+  cursor: pointer;
+
+  transition: 
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.tab.active {
+  background: white;
+  border: 1px solid #ddd;
+  font-weight: bold;
+}
+
+/* HOVER */
+.tab:hover {
+  background: #e0f3ea;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* TAB ACTIVO */
+.tab.active {
+  background: #006651;
+  color: #fff;
+  border-color: #006651;
+  box-shadow: 0 6px 18px rgba(0, 102, 81, 0.4);
+  transform: none;
+}
+
+/* =====================
+   FORMULARIOS
+   ===================== */
 .form-content {
-    display: none;  /* Ocultar por defecto */
+  display: none;
 }
 
 .form-content.active {
-    display: block;  /* Mostrar cuando tiene clase active */
+  display: block;
 }
 
- .tab {
-            flex: 1;
-            padding: 12px;
-            background: #f0f0f0;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 15px;
-        }
-        .tab.active {
-            background: white;
-            border: 1px solid #ddd;
-            font-weight: bold;
-        }
+.form-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
- button[type="submit"] {
-            width: 100%;
-            padding: 14px;
-            background: #006651;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.form-subtitle {
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* =====================
+   INPUTS
+   ===================== */
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  font-size: 14px;
+}
+
+/* =====================
+   BOTONES
+   ===================== */
+button[type="submit"] {
+  width: 100%;
+  padding: 5px;
+
+  background: #006651;
+  color: white;
+
+  border: none;
+  border-radius: 5px;
+
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 button[type="submit"]:hover {
-            background: #005544;
+  background: #005544;
 }
 
- .container {
-            max-width: 450px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-        }
-        .icon {
-            width: 60px;
-            height: 60px;
-            background: #d0f0e0;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #888;
-            margin-bottom: 30px;
-        }
-        .tabs {
-            display: flex;
-            gap: 40px;
-            margin-bottom: 30px;
-            width: 300px;
-            text-align: center;
-        }
-        
-        .tab {
-            flex: 1;
-            padding: 12px;
-            background: #f0f0f0;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 15px;
-        }
-        .tab.active {
-            background: white;
-            border: 1px solid #ddd;
-            font-weight: bold;
-        }
-        .form-content {
-            display: none;
-        }
-        .form-content.active {
-            display: block;
-        }
-        .form-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .form-subtitle {
-            color: #666;
-            margin-bottom: 25px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        button[type="submit"] {
-            width: 100%;
-            padding: 14px;
-            background: #006651;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button[type="submit"]:hover {
-            background: #005544;
-        }
+/* =====================
+   Titulo
+   ===================== */
+
+   .hero {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: 2.4px;
+  margin-bottom: 25px;
+
+  color: white;
+  text-shadow:
+    0 2px 6px rgba(0,0,0,0.35),
+    0 0 25px rgba(107,194,87,0.25);
+}
