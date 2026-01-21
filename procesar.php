@@ -9,15 +9,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $encrypted_pass = password_hash($password, PASSWORD_DEFAULT); 
 
     //CREO MI PLANTILLA 
-    $sql = "INSERT INTO usuarios(usuario, password, email)
+    $sql = "INSERT INTO usuarios(usuario, email, password)
             VALUES (?,?,?)"; 
 
     //LE AVISO A MYSQL QUE LE LLEGARA UNA QUERY
     $stmt = mysqli_prepare($connection, $sql); 
 
-    mysqli_stmt_bind_param($stmt, "sss", $usuario, $encrypted_pass, $email); 
-
-
+    mysqli_stmt_bind_param($stmt, "sss", $usuario, $email, $encrypted_pass); 
 
     $response = mysqli_stmt_execute($stmt);
 
