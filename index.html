@@ -4,20 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Sistema GYM</title>
+    <title>Money Organizer</title>
 </head>
 <body>
+    <header class="hero">
+    <h1 class="tittle">GESTOR DE PRESUPUESTO PERSONAL</h1>
+    
+    
     <div class="tabs">
         <button class="tab" onclick="showForm('login')">Iniciar Sesión</button>
         <button class="tab active" onclick="showForm('signup')">Registrarse</button>
     </div>
+    </header>
 
     <div class="container">
+         
             <div id="login" class="form-content">
             <div class="form-tittle">Iniciar Sesión</div>
             <p class="form-subtittle">Accede a tu cuenta</p>
             <form action="procesar.php" method="POST">
-                <label for="correo">correo: </label>
+                <label for="correo">Correo: </label>
                 <input type="email" name="correo" id="correo">
                 
                 <br><br>
@@ -40,7 +46,7 @@
                 
                 <br><br>
 
-                <label for="correo">correo: </label>
+                <label for="correo">Correo: </label>
                 <input type="email" name="correo" id="correo">
                 
                 <br><br>
