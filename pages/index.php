@@ -7,6 +7,8 @@ session_start(); ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/zzz.png">
+
     <title>Money Organizer</title>
 </head>
 <body>
@@ -52,7 +54,7 @@ session_start(); ?>
             <div id="login" class="form-content">
             <div class="form-tittle">Iniciar Sesión</div>
             <p class="form-subtittle">Accede a tu cuenta</p>
-            <form action="login.php" method="POST">
+            <form action="../auth/login.php" method="POST">
                 <label for="usuario">Usuario: </label>
                 <input type="text" name="usuario" id="usuario">
                 
@@ -70,7 +72,7 @@ session_start(); ?>
             <div class="form-tittle">Crear cuenta</div>
             <p class="form-subtittle">Registra tu cuenta para tu gestor personal!</p>
             
-            <form action="register.php" method="POST">
+            <form action="../auth/register.php" method="POST">
                 <label for="usuario">Usuario: </label>
                 <input type="text" name="usuario" id="usuario">
                 
