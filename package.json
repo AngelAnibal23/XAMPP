@@ -1,0 +1,24 @@
+{
+  "name": "projectangel",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AngelAnibal23/XAMPP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AngelAnibal23/XAMPP/issues"
+  },
+  "homepage": "https://github.com/AngelAnibal23/XAMPP#readme",
+  "description": "",
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.19.6",
+    "prettier": "^2.8.8"
+  }
+}

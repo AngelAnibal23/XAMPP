@@ -1,5 +1,5 @@
 <?php
-include 'BDadministrator.php'; 
+include '../config/BDadministrator.php'; 
 
 session_start(); 
 
