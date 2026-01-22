@@ -1,0 +1,24 @@
+# Dependencias de Node.js
+node_modules/
+
+# Archivos de bloqueo de paquetes
+package-lock.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Variables de entorno
+.env
+.env.local
+
