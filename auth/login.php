@@ -5,7 +5,7 @@ session_start();
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  header('Location: index.php');
+  header('Location: ../pages/index.php');
   exit;
 }
 
@@ -27,12 +27,12 @@ if($user && password_verify($password, $user['password'])){
     $_SESSION['email'] = $user['email'];
     $_SESSION['logueado'] = true; 
         
-    header('Location: dashboard.php'); 
+    header('Location: ../pages/dashboard.php'); 
     exit(); 
 }
 
 $_SESSION['error'] = "Credenciales incorrectas";
-header('Location: index.php');
+header('Location: ../pages/index.php');
 
 exit(); 
 
