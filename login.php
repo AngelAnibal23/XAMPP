@@ -5,7 +5,7 @@ session_start();
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  header('Location: index.html');
+  header('Location: index.php');
   exit;
 }
 
@@ -32,7 +32,7 @@ if($user && password_verify($password, $user['password'])){
 }
 
 $_SESSION['error'] = "Credenciales incorrectas";
-header('Location: index.html');
+header('Location: index.php');
 
 exit(); 
 
