@@ -19,7 +19,7 @@ function checker($connection, $usuario, $email){
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  header('Location: index.php');
+  header('Location: ../pages/index.php');
   exit;
 }
 
@@ -29,7 +29,7 @@ $password =  $_POST['contraseña'];
 
 if (!$usuario || !$email || !$password) {
   $_SESSION['error'] = "Campos incompletos";
-  header('Location: index.php');
+  header('Location: ../pages/index.php');
   exit;
 }
 
@@ -45,7 +45,7 @@ if(!checker($connection, $usuario, $email)){
         mysqli_close($connection);
 
         $_SESSION['succes_msg'] = "Cuenta registrada exitosamente. ";  
-        header('Location: index.php'); 
+        header('Location: ../pages/index.php'); 
         exit();
     }else{
         $error = "Error al registrar: " . mysqli_error($connection); 
@@ -54,7 +54,7 @@ if(!checker($connection, $usuario, $email)){
 
 }else{
     $_SESSION['error'] = "El usuario o correo ingresados ya existen";
-    header('Location: index.php');
+    header('Location: ../pages/index.php');
     exit;
 
 }
