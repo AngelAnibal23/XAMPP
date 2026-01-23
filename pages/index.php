@@ -1,5 +1,10 @@
 <?php
-session_start(); ?>
+session_start(); 
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,8 +22,8 @@ session_start(); ?>
     
     
     <div class="tabs">
-        <button class="tab" onclick="showForm('login')">Iniciar Sesión</button>
-        <button class="tab active" onclick="showForm('signup')">Registrarse</button>
+        <button class="tab <?= (!isset($_SESSION['active_form']) || $_SESSION['active_form'] === 'login') ? 'active' : '' ?>" onclick="showForm('login')">Iniciar Sesión</button>
+        <button class="tab <?= (isset($_SESSION['active_form']) && $_SESSION['active_form'] === 'signup') ? 'active' : '' ?>" onclick="showForm('signup')">Registrarse</button>
     </div>
     </header>
 
@@ -51,46 +56,51 @@ session_start(); ?>
     <?php unset($_SESSION["success"]); ?>
     <?php endif; ?>
     
-            <div id="login" class="form-content">
-            <div class="form-tittle">Iniciar Sesión</div>
-            <p class="form-subtittle">Accede a tu cuenta</p>
-            <form action="../auth/login.php" method="POST">
-                <label for="usuario">Usuario: </label>
-                <input type="text" name="usuario" id="usuario">
-                
-                <br><br>
-
-                <label for="contraseña">Contraseña</label>
-                <input type="password" name="contraseña" id="contraseña">
-
-                <br><br>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
-
-        <div id="signup" class="form-content active">
-            <div class="form-tittle">Crear cuenta</div>
-            <p class="form-subtittle">Registra tu cuenta para tu gestor personal!</p>
+    <div id="login" class="form-content <?= (!isset($_SESSION['active_form']) || $_SESSION['active_form'] === 'login') ? 'active' : '' ?>">
+        <div class="form-tittle">Iniciar Sesión</div>
+        <p class="form-subtittle">Accede a tu cuenta</p>
+        <form action="../auth/login.php" method="POST" autocomplete="off">
+            <label for="usuario">Usuario: </label>
+            <input type="text" name="usuario" id="usuario" autocomplete="off">
             
-            <form action="../auth/register.php" method="POST">
-                <label for="usuario">Usuario: </label>
-                <input type="text" name="usuario" id="usuario">
-                
-                <br><br>
+            <br><br>
 
-                <label for="correo">Correo: </label>
-                <input type="email" name="correo" id="correo">
-                
-                <br><br>
+            <label for="contraseña">Contraseña</label>
+            <input type="password" name="contraseña" id="contraseña" autocomplete="off">
 
-                <label for="contraseña">Contraseña</label>
-                <input type="password" name="contraseña" id="contraseña">
+            <br><br>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
 
-                <br><br>
-                <button type="submit">Enviar</button>
-            </form>
+    <div id="signup" class="form-content <?= (isset($_SESSION['active_form']) && $_SESSION['active_form'] === 'signup') ? 'active' : '' ?>">
+        <div class="form-tittle">Crear cuenta</div>
+        <p class="form-subtittle">Registra tu cuenta para tu gestor personal!</p>
+        
+        <form action="../auth/register.php" method="POST" autocomplete="off">
+            <label for="usuario">Usuario: </label>
+            <input type="text" name="usuario" id="usuario" autocomplete="off">
+            
+            <br><br>
 
-        </div>
+            <label for="correo">Correo: </label>
+            <input type="email" name="correo" id="correo" autocomplete="off">
+            
+            <br><br>
+
+            <label for="contraseña">Contraseña</label>
+            <input type="password" name="contraseña" id="contraseña" autocomplete="off">
+
+            <br><br>
+            <button type="submit">Enviar</button>
+        </form>
+
+    </div>
+    
+    <?php 
+
+    unset($_SESSION['active_form']); 
+    ?>
     </div>
     <script src="../assets/js/app.js"></script>
 </body>
