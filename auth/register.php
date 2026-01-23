@@ -29,6 +29,7 @@ $password =  $_POST['contraseña'];
 
 if (!$usuario || !$email || !$password) {
   $_SESSION['error'] = "Campos incompletos";
+  $_SESSION['active_form'] = 'signup';
   header('Location: ../pages/index.php');
   exit;
 }
@@ -54,6 +55,7 @@ if(!checker($connection, $usuario, $email)){
 
 }else{
     $_SESSION['error'] = "El usuario o correo ingresados ya existen";
+    $_SESSION['active_form'] = 'signup'; 
     header('Location: ../pages/index.php');
     exit;
 
