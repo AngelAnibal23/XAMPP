@@ -32,6 +32,7 @@ if($user && password_verify($password, $user['password'])){
 }
 
 $_SESSION['error'] = "Credenciales incorrectas";
+$_SESSION['active_form'] = 'login';
 header('Location: ../pages/index.php');
 
 exit(); 
