@@ -4,24 +4,22 @@
 :root {
   --bg0: #1a1a1a;
   --bg1: #262626;
-  --panel: rgba(38,38,38,.72);
-  --panel2: rgba(38,38,38,.55);
 
-  --text: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.72);
-  --line: rgba(255,255,255,.12);
+  --panel: rgba(38,38,38,.78);
+  --panel-border: rgba(255,255,255,.12);
 
-  --green-dark: #2d7a3e;
-  --green-mid: #3d9e52;
-  --green-light: #6bc257;
-  --green-yellow: #b8d95a;
+  --text: rgba(255,255,255,.95);
+  --muted: rgba(255,255,255,.65);
 
-  --shadow: 0 18px 50px rgba(0,0,0,.6);
+  --green-main: #2fa36b;
+  --green-dark: #237a50;
+
   --radius: 16px;
+  --shadow: 0 20px 55px rgba(0,0,0,.65);
 }
 
 /* =====================
-   RESET / BASE
+   BASE
    ===================== */
 * {
   box-sizing: border-box;
@@ -32,121 +30,87 @@ html, body {
   margin: 0;
 }
 
-/* =====================
-   BODY / BACKGROUND
-   ===================== */
 body {
   min-height: 100vh;
   padding: clamp(20px, 4vw, 52px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  font-family: ui-sans-serif, system-ui, -apple-system,
-               "Segoe UI", Roboto, Arial, sans-serif;
-
+  font-family: 'Inter', system-ui, sans-serif;
   color: var(--text);
 
   background:
-    radial-gradient(1200px 700px at 15% 20%, rgba(45,122,62,.22), transparent 60%),
-    radial-gradient(1200px 700px at 85% 25%, rgba(107,194,87,.18), transparent 62%),
-    radial-gradient(900px 600px at 50% 105%, rgba(184,217,90,.10), transparent 60%),
-    linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 55%, #0d0d0d 100%);
+    radial-gradient(1200px 700px at 20% 20%, rgba(47,163,107,.18), transparent 60%),
+    radial-gradient(900px 600px at 80% 30%, rgba(107,194,87,.15), transparent 60%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
 }
 
 /* =====================
-   TITULOS
+   HEADER
    ===================== */
-h1 {
+.hero {
   text-align: center;
-  color: white;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  text-align: center;
-  color: #888;
   margin-bottom: 30px;
 }
 
-/* =====================
-   CONTENEDOR PRINCIPAL
-   ===================== */
-.container {
-  max-width: 450px;
-  width: 100%;
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  color: black;
+.title {
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
 }
 
 /* =====================
-   ICONO
-   ===================== */
-.icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 20px;
-  border-radius: 50%;
-  background: #d0f0e0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 30px;
-}
-
-/* =====================
-   TABS (LOGIN / REGISTER)
+   TABS
    ===================== */
 .tabs {
   display: flex;
-  gap: 10px;
-  margin: 0 auto 30px;
-  max-width: 450px;
-  color: black;
-  width: 450px;
+  gap: 12px;
+  max-width: 420px;
+  margin: 0 auto;
 }
 
 .tab {
   flex: 1;
-  padding: 10px;
-  background: #f0f0f0;
-  border: none;
-  border-radius: 10px;
-  color: black;
-  font-size: 17px;
+  padding: 12px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: transparent;
+  color: var(--muted);
   cursor: pointer;
 
-  transition: 
-    background 0.2s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: all .2s ease;
 }
 
-.tab.active {
-  background: white;
-  border: 1px solid #ddd;
-  font-weight: bold;
-}
-
-/* HOVER */
 .tab:hover {
-  background: #e0f3ea;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
 }
 
-/* TAB ACTIVO */
 .tab.active {
-  background: #006651;
+  background: var(--green-main);
   color: #fff;
-  border-color: #006651;
-  box-shadow: 0 6px 18px rgba(0, 102, 81, 0.4);
-  transform: none;
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(47,163,107,.4);
+}
+
+/* =====================
+   CARD
+   ===================== */
+.container {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 28px;
+
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+
+  backdrop-filter: blur(12px);
 }
 
 /* =====================
@@ -154,83 +118,78 @@ h1 {
    ===================== */
 .form-content {
   display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all .25s ease;
 }
 
 .form-content.active {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .form-title {
   font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
 .form-subtitle {
-  color: #666;
-  margin-bottom: 25px;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 24px;
 }
 
 /* =====================
    INPUTS
    ===================== */
 label {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
   display: block;
-  margin-bottom: 8px;
-  color: #333;
-  font-weight: 500;
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
+  padding: 14px;
+  margin-bottom: 18px;
 
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
 
-  font-size: 14px;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--green-main);
+  box-shadow: 0 0 0 3px rgba(47,163,107,.25);
 }
 
 /* =====================
-   BOTONES
+   BOTON
    ===================== */
 button[type="submit"] {
   width: 100%;
-  padding: 5px;
+  padding: 14px;
 
-  background: #006651;
-  color: white;
-
+  border-radius: 12px;
   border: none;
-  border-radius: 5px;
 
-  font-size: 24px;
-  font-weight: bold;
+  background: linear-gradient(135deg, var(--green-main), var(--green-dark));
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
+
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
 button[type="submit"]:hover {
-  background: #005544;
-}
-
-/* =====================
-   Titulo
-   ===================== */
-
-   .hero {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.title {
-  font-size: clamp(24px, 4vw, 42px);
-  font-weight: 800;
-  letter-spacing: 2.4px;
-  margin-bottom: 25px;
-
-  color: white;
-  text-shadow:
-    0 2px 6px rgba(0,0,0,0.35),
-    0 0 25px rgba(107,194,87,0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(47,163,107,.45);
 }
