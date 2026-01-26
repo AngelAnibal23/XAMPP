@@ -1,5 +1,5 @@
 <?php
-require_once '../config/database.php';
+require_once '../config/BDadministrator.php';
 
 // INSERTAR transacción
 function agregarTransaccion($usuario_id, $categoria_id, $descripcion, $monto, $fecha) {
