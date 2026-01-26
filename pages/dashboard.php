@@ -1,4 +1,20 @@
 <?php
+session_start();
+require_once '../config/database.php';
+require_once '../functions/transacciones.php';
+require_once '../functions/categorias.php';
+
+// Verificar login
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../login.php');
+    exit();
+}
+
+$usuario_id = $_SESSION['usuario_id'];
+
+$estadisticas = obtenerEstadisticasMes($usuario_id);
+$transacciones = obtenerTransacciones($usuario_id, 5);
+$gastosPorCategoria = obtenerGastosPorCategoria($usuario_id); 
 
 ?> 
 
