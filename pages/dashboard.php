@@ -17,9 +17,6 @@ $transacciones = obtenerTransacciones($usuario_id, 5);
 $gastosPorCategoria = obtenerGastosPorCategoria($usuario_id); 
 $categorias = obtenerCategorias($usuario_id);
 
-var_dump($categorias); 
-die();
-
 ?> 
 
 <!DOCTYPE html>
