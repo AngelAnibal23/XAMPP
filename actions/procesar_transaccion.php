@@ -1,16 +1,18 @@
 <?php
 session_start();
-require_once '../config/database.php';
-require_once '../functions/transacciones.php';
+require_once '../config/BDadministrator.php';
+require_once '../includes/transacciones.php';
+
 
 // Verificar que el usuario esté logueado
-if (!isset($_SESSION['usuario_id'])) {
-    header('Location: ../login.php');
+if (!isset($_SESSION['id_user'])) {
+    header('Location: ../pages/dashboard.php');
 
 }
 
-$usuario_id = $_SESSION['usuario_id'];
+$usuario_id = $_SESSION['id_user'];
 $accion = $_POST['accion'] ?? '';
+
 
 switch ($accion) {
     case 'agregar':
