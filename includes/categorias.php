@@ -1,5 +1,5 @@
 <?php
-require_once '../config/database.php';
+require_once '../config/BDadministrator.php';
 
 // OBTENER categorías (default + personalizadas del usuario)
 function obtenerCategorias($usuario_id, $tipo = null) {
