@@ -140,3 +140,208 @@ window.addEventListener('load', function() {
             }
         });
 
+function initTheme() {
+    // Verificar si hay un tema guardado en localStorage
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        updateThemeIcon(true);
+    } else {
+        updateThemeIcon(false);
+    }
+}
+
+function toggleTheme() {
+    const body = document.body;
+    const isDark = body.classList.toggle('dark-mode');
+    
+    // Guardar preferencia en localStorage
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    
+    // Actualizar icono
+    updateThemeIcon(isDark);
+    
+    // Animación suave
+    body.style.transition = 'all 0.3s ease';
+}
+
+function updateThemeIcon(isDark) {
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
+        themeToggle.title = isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+    }
+}
+
+// ========== GRÁFICOS ==========
+const gastosPorCategoria = window.gastosPorCategoria || [];
+
+// Configuración de colores para Chart.js según el tema
+function getChartColors() {
+    const isDark = document.body.classList.contains('dark-mode');
+    return {
+        textColor: isDark ? '#e8eaed' : '#1e3a52',
+        gridColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        backgroundColor: isDark ? '#1e2329' : '#ffffff'
+    };
+}
+
+// Gráfico de línea
+if (document.getElementById('lineChart')) {
+    const colors = getChartColors();
+    
+    const ctxLine = document.getElementById('lineChart').getContext('2d');
+    new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: ['31 dic', '04 ene', '06 ene', '09 ene', '11 ene', '14 ene', '17 ene', '19 ene'],
+            datasets: [
+                {
+                    label: 'Ingresos',
+                    data: [1000, 0, 0, 0, 0, 0, 0, 1000],
+                    borderColor: '#5fd3bc',
+                    backgroundColor: 'rgba(95, 211, 188, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Gastos',
+                    data: [1000, 100, 50, 80, 120, 90, 110, 500],
+                    borderColor: '#ff7a59',
+                    backgroundColor: 'rgba(255, 122, 89, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        color: colors.textColor,
+                        usePointStyle: true,
+                        padding: 15
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: colors.gridColor
+                    },
+                    ticks: {
+                        color: colors.textColor
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: colors.textColor
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Gráfico de torta
+if (document.getElementById('pieChart') && gastosPorCategoria.length > 0) {
+    const colors = getChartColors();
+    
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    const labels = gastosPorCategoria.map(item => item.categoria_nombre);
+    const data = gastosPorCategoria.map(item => item.total);
+    
+    const backgroundColors = [
+        '#4a90e2',
+        '#ff7a59',
+        '#5fd3bc',
+        '#ffa500',
+        '#9b59b6',
+        '#3ec8a8',
+        '#ff6b9d'
+    ];
+    
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: backgroundColors.slice(0, labels.length),
+                borderWidth: 2,
+                borderColor: colors.backgroundColor
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        color: colors.textColor,
+                        usePointStyle: true,
+                        padding: 15
+                    }
+                }
+            }
+        }
+    });
+}
+
+// ========== MODAL ==========
+function abrirModal() {
+    document.getElementById('modalTransaccion').style.display = 'block';
+}
+
+function cerrarModal() {
+    document.getElementById('modalTransaccion').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('modalTransaccion');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// ========== INICIALIZACIÓN ==========
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar tema
+    initTheme();
+    
+    // Auto-ocultar mensajes después de 5 segundos
+    const mensaje = document.querySelector('.mensaje');
+    if (mensaje) {
+        setTimeout(() => {
+            mensaje.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => mensaje.remove(), 300);
+        }, 5000);
+    }
+});
+
+// Animación de salida para mensajes
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
