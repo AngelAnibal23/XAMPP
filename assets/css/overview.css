@@ -1,3 +1,73 @@
+/* ========== VARIABLES DE TEMA ========== */
+:root {
+    /* Colores principales */
+    --primary-gradient-1: #5fd3bc;
+    --primary-gradient-2: #3ec8a8;
+    
+    /* Tema Claro (por defecto) */
+    --bg-body: linear-gradient(135deg, #1a7f64 0%, #2d9b7f 50%, #4fb89e 100%);
+    --bg-header: linear-gradient(135deg, #1e3a52 0%, #2c5470 100%);
+    --bg-card: #ffffff;
+    --bg-modal: #ffffff;
+    
+    --text-primary: #1e3a52;
+    --text-secondary: #6b7c8c;
+    --text-tertiary: #8b9aa8;
+    --text-header: #ffffff;
+    --text-header-subtitle: #a8c5d9;
+    
+    --border-color: #e3e8ef;
+    --shadow-card: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-hover: 0 8px 20px rgba(0,0,0,0.12);
+    
+    --transaction-bg: #f8fafb;
+    --transaction-hover-bg: #ffffff;
+    --transaction-border-hover: #3ec8a8;
+    
+    --empty-state-opacity: 0.4;
+    --scrollbar-track: #f0f4f7;
+    --scrollbar-thumb: linear-gradient(135deg, #5fd3bc 0%, #3ec8a8 100%);
+    
+    --input-bg: #ffffff;
+    --input-border: #e3e8ef;
+    --input-focus-border: #3ec8a8;
+    
+    --modal-backdrop: rgba(0, 0, 0, 0.5);
+}
+
+/* Tema Oscuro */
+body.dark-mode {
+    --bg-body: linear-gradient(135deg, #0f1419 0%, #1a1f26 50%, #252b33 100%);
+    --bg-header: linear-gradient(135deg, #1a1f26 0%, #252b33 100%);
+    --bg-card: #1e2329;
+    --bg-modal: #1e2329;
+    
+    --text-primary: #e8eaed;
+    --text-secondary: #9ba3ad;
+    --text-tertiary: #6b7280;
+    --text-header: #ffffff;
+    --text-header-subtitle: #9ba3ad;
+    
+    --border-color: #2d3339;
+    --shadow-card: 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-hover: 0 8px 20px rgba(0,0,0,0.4);
+    
+    --transaction-bg: #252b33;
+    --transaction-hover-bg: #2d3339;
+    --transaction-border-hover: #3ec8a8;
+    
+    --empty-state-opacity: 0.3;
+    --scrollbar-track: #252b33;
+    --scrollbar-thumb: linear-gradient(135deg, #5fd3bc 0%, #3ec8a8 100%);
+    
+    --input-bg: #252b33;
+    --input-border: #2d3339;
+    --input-focus-border: #3ec8a8;
+    
+    --modal-backdrop: rgba(0, 0, 0, 0.7);
+}
+
+/* ========== ESTILOS BASE ========== */
 * {
     margin: 0;
     padding: 0;
@@ -6,34 +76,65 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #1a7f64 0%, #2d9b7f 50%, #4fb89e 100%);
-    color: #1e3a52;
+    background: var(--bg-body);
+    color: var(--text-primary);
     min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
+/* ========== HEADER ========== */
 .header {
-    background: linear-gradient(135deg, #1e3a52 0%, #2c5470 100%);
+    background: var(--bg-header);
     padding: 1.5rem 2rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background 0.3s ease;
 }
 
 .header-left h1 {
     font-size: 1.875rem;
     font-weight: 700;
     margin-bottom: 0.25rem;
-    color: white;
+    color: var(--text-header);
 }
 
 .header-left p {
-    color: #a8c5d9;
+    color: var(--text-header-subtitle);
     font-size: 0.875rem;
 }
 
+/* ========== BOTÓN DE TEMA ========== */
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(180deg) scale(1.1);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .btn-primary {
-    background: linear-gradient(135deg, #5fd3bc 0%, #3ec8a8 100%);
+    background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -62,7 +163,7 @@ body {
 /* ========== DISEÑO DE DOS COLUMNAS ========== */
 .main-layout {
     display: grid;
-    grid-template-columns: 1fr 550px;  /* Ajustado a 480px para mejor visualización */
+    grid-template-columns: 1fr 550px;
     gap: 1.5rem;
 }
 
@@ -81,10 +182,10 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: var(--bg-card);
     padding: 1.75rem;
     border-radius: 1.25rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-card);
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
@@ -117,7 +218,7 @@ body {
 
 .stat-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    box-shadow: var(--shadow-hover);
 }
 
 .stat-header {
@@ -129,7 +230,7 @@ body {
 
 .stat-title {
     font-size: 0.875rem;
-    color: #6b7c8c;
+    color: var(--text-secondary);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -156,6 +257,18 @@ body {
     background: linear-gradient(135deg, #dae9f7 0%, #c5ddf5 100%);
 }
 
+body.dark-mode .icon-green {
+    background: linear-gradient(135deg, rgba(95, 211, 188, 0.2) 0%, rgba(62, 200, 168, 0.2) 100%);
+}
+
+body.dark-mode .icon-red {
+    background: linear-gradient(135deg, rgba(255, 94, 58, 0.2) 0%, rgba(255, 122, 89, 0.2) 100%);
+}
+
+body.dark-mode .icon-blue {
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(53, 122, 189, 0.2) 100%);
+}
+
 .stat-amount {
     font-size: 2.5rem;
     font-weight: 700;
@@ -174,7 +287,7 @@ body {
 
 .stat-label {
     font-size: 0.8rem;
-    color: #8b9aa8;
+    color: var(--text-tertiary);
     font-weight: 500;
 }
 
@@ -186,20 +299,21 @@ body {
 }
 
 .chart-card {
-    background: white;
+    background: var(--bg-card);
     padding: 2rem;
     border-radius: 1.25rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-card);
+    transition: background 0.3s ease;
 }
 
 .chart-title {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #1e3a52;
+    color: var(--text-primary);
 }
 
-/* ========== COLUMNA DERECHA: TRANSACCIONES (PROTAGONISMO) ========== */
+/* ========== COLUMNA DERECHA: TRANSACCIONES ========== */
 .right-column {
     position: sticky;
     top: 2rem;
@@ -208,18 +322,19 @@ body {
 }
 
 .transactions-section {
-    background: white;
+    background: var(--bg-card);
     border-radius: 1.25rem;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     display: flex;
     flex-direction: column;
     height: calc(100vh - 4rem);
     max-height: 850px;
-    border: 3px solid #3ec8a8;
+    border: 3px solid var(--primary-gradient-2);
+    transition: background 0.3s ease;
 }
 
 .section-header {
-    background: linear-gradient(135deg, #5fd3bc 0%, #3ec8a8 100%);
+    background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
     padding: 1.5rem 1.75rem;
     border-radius: 1.25rem 1.25rem 0 0;
     display: flex;
@@ -256,15 +371,15 @@ body {
 }
 
 .transactions-container::-webkit-scrollbar-track {
-    background: #f0f4f7;
+    background: var(--scrollbar-track);
     border-radius: 10px;
     margin: 5px;
 }
 
 .transactions-container::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #5fd3bc 0%, #3ec8a8 100%);
+    background: var(--scrollbar-thumb);
     border-radius: 10px;
-    border: 2px solid #f0f4f7;
+    border: 2px solid var(--scrollbar-track);
 }
 
 .transactions-container::-webkit-scrollbar-thumb:hover {
@@ -280,13 +395,13 @@ body {
     border-radius: 0.875rem;
     margin-bottom: 0.875rem;
     transition: all 0.25s;
-    background: #f8fafb;
+    background: var(--transaction-bg);
     border: 2px solid transparent;
 }
 
 .transaction-item:hover {
-    background: white;
-    border-color: #3ec8a8;
+    background: var(--transaction-hover-bg);
+    border-color: var(--transaction-border-hover);
     transform: translateX(5px);
     box-shadow: 0 4px 12px rgba(62, 200, 168, 0.15);
 }
@@ -320,7 +435,7 @@ body {
     font-size: 0.9375rem;
     font-weight: 600;
     margin-bottom: 0.25rem;
-    color: #1e3a52;
+    color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -328,7 +443,7 @@ body {
 
 .transaction-info p {
     font-size: 0.75rem;
-    color: #8b9aa8;
+    color: var(--text-tertiary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -368,6 +483,14 @@ body {
     transform: scale(1.1);
 }
 
+body.dark-mode .btn-delete {
+    background: rgba(255, 94, 58, 0.2);
+}
+
+body.dark-mode .btn-delete:hover {
+    background: #ff5e3a;
+}
+
 /* Estado vacío */
 .empty-state {
     display: flex;
@@ -382,11 +505,11 @@ body {
 .empty-state-icon {
     font-size: 4rem;
     margin-bottom: 1rem;
-    opacity: 0.4;
+    opacity: var(--empty-state-opacity);
 }
 
 .empty-state p {
-    color: #8b9aa8;
+    color: var(--text-tertiary);
     font-size: 1rem;
     margin-bottom: 1.5rem;
 }
@@ -400,12 +523,12 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--modal-backdrop);
     backdrop-filter: blur(4px);
 }
 
 .modal-content {
-    background: white;
+    background: var(--bg-modal);
     margin: 5% auto;
     padding: 2.5rem;
     border-radius: 1.25rem;
@@ -413,6 +536,7 @@ body {
     max-width: 500px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: slideDown 0.3s ease;
+    transition: background 0.3s ease;
 }
 
 @keyframes slideDown {
@@ -432,11 +556,11 @@ body {
     align-items: center;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #f0f4f7;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .modal-header h2 {
-    color: #1e3a52;
+    color: var(--text-primary);
     font-size: 1.5rem;
     font-weight: 700;
 }
@@ -445,7 +569,7 @@ body {
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    color: #8b9aa8;
+    color: var(--text-tertiary);
     transition: all 0.2s;
     width: 35px;
     height: 35px;
@@ -456,7 +580,7 @@ body {
 }
 
 .close:hover {
-    background: #f0f4f7;
+    background: var(--transaction-bg);
     color: #ff5e3a;
 }
 
@@ -469,7 +593,7 @@ body {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: #1e3a52;
+    color: var(--text-primary);
     font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -479,29 +603,30 @@ body {
 .form-group select {
     width: 100%;
     padding: 0.875rem 1rem;
-    border: 2px solid #e3e8ef;
+    border: 2px solid var(--input-border);
     border-radius: 0.75rem;
     font-size: 0.9375rem;
     transition: all 0.2s;
     font-family: inherit;
-    background: white;
+    background: var(--input-bg);
+    color: var(--text-primary);
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #3ec8a8;
+    border-color: var(--input-focus-border);
     box-shadow: 0 0 0 3px rgba(62, 200, 168, 0.1);
 }
 
 .form-group input::placeholder {
-    color: #c4cdd5;
+    color: var(--text-tertiary);
 }
 
 .btn-submit {
     width: 100%;
     padding: 1rem;
-    background: linear-gradient(135deg, #5fd3bc 0%, #3ec8a8 100%);
+    background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
     color: white;
     border: none;
     border-radius: 0.75rem;
@@ -542,6 +667,16 @@ body {
     color: #c33;
 }
 
+body.dark-mode .mensaje {
+    background: linear-gradient(135deg, rgba(95, 211, 188, 0.2) 0%, rgba(62, 200, 168, 0.2) 100%);
+    color: #5fd3bc;
+}
+
+body.dark-mode .mensaje.error {
+    background: linear-gradient(135deg, rgba(255, 94, 58, 0.2) 0%, rgba(255, 122, 89, 0.2) 100%);
+    color: #ff7a59;
+}
+
 @keyframes slideIn {
     from {
         transform: translateX(-20px);
@@ -564,20 +699,9 @@ body {
     }
 }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 1400px) {
-    .main-layout {
-        grid-template-columns: 1fr 400px;  /* Panel más estrecho en pantallas medianas */
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
 @media (max-width: 1200px) {
     .main-layout {
-        grid-template-columns: 1fr;  /* Una sola columna */
+        grid-template-columns: 1fr;
     }
     
     .right-column {
@@ -615,8 +739,17 @@ body {
         width: 100%;
     }
     
+    .header-right {
+        width: 100%;
+        flex-direction: column;
+    }
+    
     .btn-primary {
         width: 100%;
         justify-content: center;
+    }
+    
+    .theme-toggle {
+        margin: 0;
     }
 }
