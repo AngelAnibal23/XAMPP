@@ -13,7 +13,7 @@ if (!isset($_SESSION['id_user'])) {
 $usuario_id = $_SESSION['id_user'];
 
 $estadisticas = obtenerEstadisticasMes($usuario_id);
-$transacciones = obtenerTransacciones($usuario_id, 15); // Aumentado a 15 para mejor visualización
+$transacciones = obtenerTransacciones($usuario_id, 15);
 $gastosPorCategoria = obtenerGastosPorCategoria($usuario_id); 
 $categorias = obtenerCategorias($usuario_id);
 
@@ -35,10 +35,15 @@ $categorias = obtenerCategorias($usuario_id);
             <h1>Gestor de Presupuesto</h1>
             <p>Controla tus finanzas personales</p>
         </div>
-        <button class="btn-primary" onclick="abrirModal()">
-            <span>+</span>
-            Nueva Transacción
-        </button>
+        <div class="header-right">
+            <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
+                🌙
+            </button>
+            <button class="btn-primary" onclick="abrirModal()">
+                <span>+</span>
+                Nueva Transacción
+            </button>
+        </div>
     </header>
 
     <div class="container">
@@ -109,8 +114,8 @@ $categorias = obtenerCategorias($usuario_id);
             <div class="right-column">
                 <div class="transactions-section">
                     <div class="section-header">
-                        <h3 class="chart-title">💸 Transacciones Recientes</h3>
-                        <span class="transactions-count"><?php echo count($transacciones); ?> registros</span>
+                        <h3 class="chart-title">Transacciones Recientes</h3>
+                     
                     </div>
 
                     <div class="transactions-container">
@@ -198,22 +203,8 @@ $categorias = obtenerCategorias($usuario_id);
     </div>
 
     <script>
-        const gastosPorCategoria = <?php echo json_encode($gastosPorCategoria); ?>;
-        
-        function abrirModal() {
-            document.getElementById('modalTransaccion').style.display = 'block';
-        }
-        
-        function cerrarModal() {
-            document.getElementById('modalTransaccion').style.display = 'none';
-        }
-        
-        window.onclick = function(event) {
-            const modal = document.getElementById('modalTransaccion');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
+        // Pasar datos PHP a JavaScript
+        window.gastosPorCategoria = <?php echo json_encode($gastosPorCategoria); ?>;
     </script>
     
     <script src="../assets/js/app.js"></script>
