@@ -13,7 +13,7 @@ if (!isset($_SESSION['id_user'])) {
 $usuario_id = $_SESSION['id_user'];
 
 $estadisticas = obtenerEstadisticasMes($usuario_id);
-$transacciones = obtenerTransacciones($usuario_id, 5);
+$transacciones = obtenerTransacciones($usuario_id, 15); // Aumentado a 15 para mejor visualización
 $gastosPorCategoria = obtenerGastosPorCategoria($usuario_id); 
 $categorias = obtenerCategorias($usuario_id);
 
@@ -43,7 +43,7 @@ $categorias = obtenerCategorias($usuario_id);
 
     <div class="container">
         <?php if (isset($_GET['msg'])): ?>
-            <div class="mensaje">
+            <div class="mensaje <?php echo $_GET['msg'] == 'error' ? 'error' : ''; ?>">
                 <?php 
                     switch($_GET['msg']) {
                         case 'agregado': echo '✓ Transacción agregada correctamente'; break;
@@ -53,82 +53,104 @@ $categorias = obtenerCategorias($usuario_id);
                 ?>
             </div>
         <?php endif; ?>
-        <!-- Tarjetas de estadísticas -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="stat-title">Ingresos</span>
-                    <div class="stat-icon icon-green">📈</div>
-                </div>
-                <div class="stat-amount amount-green"><?php echo number_format($estadisticas['ingresos'], 2); ?> €</div>
-                <div class="stat-label">Total del mes</div>
-            </div>
 
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="stat-title">Gastos</span>
-                    <div class="stat-icon icon-red">📉</div>
-                </div>
-                <div class="stat-amount amount-red"><?php echo number_format($estadisticas['gastos'], 2); ?> €</div>
-                <div class="stat-label">Total del mes</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-header">
-                    <span class="stat-title">Balance</span>
-                    <div class="stat-icon icon-blue">💰</div>
-                </div>
-                <div class="stat-amount amount-blue"><?php echo number_format($estadisticas['balance'], 2); ?> €</div>
-                <div class="stat-label">Saldo disponible</div>
-            </div>
-        </div>
-
-        <!-- Gráficos -->
-        <div class="charts-grid">
-            <div class="chart-card">
-                <h3 class="chart-title">Evolución de Ingresos y Gastos</h3>
-                <canvas id="lineChart"></canvas>
-            </div>
-
-            <div class="chart-card">
-                <h3 class="chart-title">Gastos por Categoría</h3>
-                <canvas id="pieChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Transacciones recientes -->
-        <div class="transactions-section">
-            <div class="section-header">
-                <h3 class="chart-title">Transacciones Recientes</h3>
-            </div>
-
-            <?php if (empty($transacciones)): ?>
-                <p style="text-align: center; padding: 20px; color: #666;">No hay transacciones registradas</p>
-            <?php else: ?>
-                <?php foreach ($transacciones as $trans): ?>
-                    <div class="transaction-item">
-                        <div class="transaction-left">
-                            <div class="transaction-icon <?php echo $trans['tipo'] == 'ingreso' ? 'icon-green' : 'icon-red'; ?>">
-                                <?php echo $trans['icono']; ?>
-                            </div>
-                            <div class="transaction-info">
-                                <h4><?php echo htmlspecialchars($trans['descripcion']); ?></h4>
-                                <p><?php echo htmlspecialchars($trans['categoria_nombre']); ?> • <?php echo date('d M Y', strtotime($trans['fecha'])); ?></p>
-                            </div>
+        <!-- DISEÑO DE DOS COLUMNAS -->
+        <div class="main-layout">
+            
+            <!-- COLUMNA IZQUIERDA: Estadísticas y Gráficos -->
+            <div class="left-column">
+                
+                <!-- Tarjetas de estadísticas -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Ingresos</span>
+                            <div class="stat-icon icon-green">📈</div>
                         </div>
-                        <div style="display: flex; align-items: center;">
-                            <span class="transaction-amount <?php echo $trans['tipo'] == 'ingreso' ? 'amount-green' : 'amount-red'; ?>">
-                                <?php echo $trans['tipo'] == 'ingreso' ? '+' : '-'; ?><?php echo number_format($trans['monto'], 2); ?> €
-                            </span>
-                            <form method="POST" action="../actions/procesar_transaccion.php" style="display: inline; margin: 0;">
-                                <input type="hidden" name="accion" value="eliminar">
-                                <input type="hidden" name="id" value="<?php echo $trans['id']; ?>">
-                                <button type="submit" class="btn-delete" onclick="return confirm('¿Eliminar esta transacción?')">🗑</button>
-                            </form>
-                        </div>
+                        <div class="stat-amount amount-green"> S/. <?php echo number_format($estadisticas['ingresos'], 2); ?> </div>
+                        <div class="stat-label">Total del mes</div>
                     </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Gastos</span>
+                            <div class="stat-icon icon-red">📉</div>
+                        </div>
+                        <div class="stat-amount amount-red">S/. <?php echo number_format($estadisticas['gastos'], 2); ?> </div>
+                        <div class="stat-label">Total del mes</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Balance</span>
+                            <div class="stat-icon icon-blue">💰</div>
+                        </div>
+                        <div class="stat-amount amount-blue">S/.<?php echo number_format($estadisticas['balance'], 2); ?> </div>
+                        <div class="stat-label">Saldo disponible</div>
+                    </div>
+                </div>
+
+                <!-- Gráficos -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Evolución de Ingresos y Gastos</h3>
+                        <canvas id="lineChart"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3 class="chart-title">Gastos por Categoría</h3>
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA DERECHA: Transacciones Recientes (PROTAGONISMO) -->
+            <div class="right-column">
+                <div class="transactions-section">
+                    <div class="section-header">
+                        <h3 class="chart-title">💸 Transacciones Recientes</h3>
+                        <span class="transactions-count"><?php echo count($transacciones); ?> registros</span>
+                    </div>
+
+                    <div class="transactions-container">
+                        <?php if (empty($transacciones)): ?>
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📋</div>
+                                <p>No hay transacciones registradas</p>
+                                <button class="btn-primary" onclick="abrirModal()" style="margin-top: 1rem;">
+                                    Agregar primera transacción
+                                </button>
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($transacciones as $trans): ?>
+                                <div class="transaction-item">
+                                    <div class="transaction-left">
+                                        <div class="transaction-icon <?php echo $trans['tipo'] == 'ingreso' ? 'icon-green' : 'icon-red'; ?>">
+                                            <?php echo $trans['icono']; ?>
+                                        </div>
+                                        <div class="transaction-info">
+                                            <h4><?php echo htmlspecialchars($trans['descripcion']); ?></h4>
+                                            <p><?php echo htmlspecialchars($trans['categoria_nombre']); ?> • <?php echo date('d M Y', strtotime($trans['fecha'])); ?></p>
+                                        </div>
+                                    </div>
+                                    <div class="transaction-right">
+                                        <span class="transaction-amount <?php echo $trans['tipo'] == 'ingreso' ? 'amount-green' : 'amount-red'; ?>">
+                                           S/. <?php echo $trans['tipo'] == 'ingreso' ? '+' : '-'; ?><?php echo number_format($trans['monto'], 2); ?> 
+                                        </span>
+                                        <form method="POST" action="../actions/procesar_transaccion.php" style="display: inline; margin: 0;">
+                                            <input type="hidden" name="accion" value="eliminar">
+                                            <input type="hidden" name="id" value="<?php echo $trans['id']; ?>">
+                                            <button type="submit" class="btn-delete" onclick="return confirm('¿Eliminar esta transacción?')" title="Eliminar">🗑️</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -161,7 +183,7 @@ $categorias = obtenerCategorias($usuario_id);
                 </div>
 
                 <div class="form-group">
-                    <label>Monto (€) *</label>
+                    <label>Monto (S/.) *</label>
                     <input type="number" name="monto" step="0.01" placeholder="0.00" required>
                 </div>
 
