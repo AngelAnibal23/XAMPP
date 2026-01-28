@@ -25,6 +25,21 @@ $categorias = obtenerCategorias($usuario_id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Gestor de Presupuesto</title>
+    
+    <!-- APLICAR TEMA ANTES DE CARGAR LA PÁGINA -->
+    <script>
+        // Este código se ejecuta INMEDIATAMENTE antes de que se renderice el body
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            } else {
+                // Asegurarse de remover dark-mode si no está guardado
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../assets/css/overview.css">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/zzz.png">
@@ -36,7 +51,7 @@ $categorias = obtenerCategorias($usuario_id);
             <p>Controla tus finanzas personales</p>
         </div>
         <div class="header-right">
-            <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
+            <button id="themeToggle" class="theme-toggle" title="Cambiar tema">
                 🌙
             </button>
             <button class="btn-primary" onclick="abrirModal()">
@@ -99,12 +114,16 @@ $categorias = obtenerCategorias($usuario_id);
                 <div class="charts-grid">
                     <div class="chart-card">
                         <h3 class="chart-title">Evolución de Ingresos y Gastos</h3>
-                        <canvas id="lineChart"></canvas>
+                        <div style="position: relative; height: 280px; width: 100%;">
+                            <canvas id="lineChart"></canvas>
+                        </div>
                     </div>
 
                     <div class="chart-card">
                         <h3 class="chart-title">Gastos por Categoría</h3>
-                        <canvas id="pieChart"></canvas>
+                        <div style="position: relative; height: 280px; width: 100%;">
+                            <canvas id="pieChart"></canvas>
+                        </div>
                     </div>
                 </div>
 
@@ -205,6 +224,13 @@ $categorias = obtenerCategorias($usuario_id);
     <script>
         // Pasar datos PHP a JavaScript
         window.gastosPorCategoria = <?php echo json_encode($gastosPorCategoria); ?>;
+        
+        // Datos de ejemplo para evolución (puedes reemplazar con datos reales)
+        window.evolucionDatos = {
+            labels: ['31 dic', '04 ene', '06 ene', '09 ene', '11 ene', '14 ene', '17 ene', '19 ene'],
+            ingresos: [1000, 0, 0, 0, 0, 0, 0, 1000],
+            gastos: [1000, 100, 50, 80, 120, 90, 110, 500]
+        };
     </script>
     
     <script src="../assets/js/app.js"></script>
