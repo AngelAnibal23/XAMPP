@@ -1,169 +1,68 @@
-function showForm(formType) {
-// Ocultar todos los formularios
-    document.querySelectorAll('.form-content').forEach(form => {
-        form.classList.remove('active');
-    });
-                
-    // Desactivar todas las pestañas
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-                
-    // Mostrar el formulario seleccionado
-    document.getElementById(formType).classList.add('active');
-                
-    // Activar la pestaña correspondiente
-    event.target.classList.add('active');           
-}
-
-// AGREGAR ESTE CÓDIGO NUEVO:
-// Detectar cuando vuelves a la página (con botón atrás)
-window.addEventListener('pageshow', function(event) {
-    // Si la página viene del cache (botón atrás)
-    if (event.persisted) {
-        // Limpiar todos los formularios
-        document.querySelectorAll('form').forEach(form => {
-            form.reset();
-        });
-    }
-});
-
-// Limpiar formularios cuando se carga la página normalmente
-window.addEventListener('load', function() {
-    document.querySelectorAll('form').forEach(form => {
-        form.reset();
-    });
-});
-
-
-//DASHBOARD
-
- // Gráfico de líneas
-        const lineCtx = document.getElementById('lineChart').getContext('2d');
-        new Chart(lineCtx, {
-            type: 'line',
-            data: {
-                labels: ['31 dic', '04 ene', '06 ene', '09 ene', '11 ene', '14 ene', '17 ene', '19 ene'],
-                datasets: [{
-                    label: 'Ingresos',
-                    data: [3600, 100, 50, 200, 150, 100, 300, 800],
-                    borderColor: '#3ec8a8',
-                    backgroundColor: 'rgba(62, 200, 168, 0.15)',
-                    tension: 0.4,
-                    fill: true,
-                    borderWidth: 3,
-                    pointRadius: 5,
-                    pointBackgroundColor: '#3ec8a8',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2
-                }, {
-                    label: 'Gastos',
-                    data: [900, 85, 65, 120, 45, 230, 150, 100],
-                    borderColor: '#ff5e3a',
-                    backgroundColor: 'rgba(255, 94, 58, 0.15)',
-                    tension: 0.4,
-                    fill: true,
-                    borderWidth: 3,
-                    pointRadius: 5,
-                    pointBackgroundColor: '#ff5e3a',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: 13,
-                                weight: 600
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-
-        // Gráfico de pastel
-        const pieCtx = document.getElementById('pieChart').getContext('2d');
-        new Chart(pieCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Vivienda', 'Alimentación', 'Shopping', 'Servicios', 'Transporte', 'Entretenimiento', 'Salud'],
-                datasets: [{
-                    data: [53, 15, 11, 8, 7, 4, 3],
-                    backgroundColor: [
-                        '#4a90e2',
-                        '#ff7a59',
-                        '#5fd3bc',
-                        '#f5a623',
-                        '#7b68ee',
-                        '#50c878',
-                        '#ff6b9d'
-                    ],
-                    borderWidth: 4,
-                    borderColor: '#fff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: 12,
-                                weight: 500
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-function initTheme() {
-    // Verificar si hay un tema guardado en localStorage
+// ========== APLICAR TEMA INMEDIATAMENTE (ANTES DE QUE CARGUE EL DOM) ==========
+(function() {
     const savedTheme = localStorage.getItem('theme');
+    const html = document.documentElement;
     
     if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        updateThemeIcon(true);
+        html.classList.add('dark-mode');
+        if (document.body) {
+            document.body.classList.add('dark-mode');
+        }
     } else {
+        html.classList.remove('dark-mode');
+        if (document.body) {
+            document.body.classList.remove('dark-mode');
+        }
+    }
+})();
+
+// ========== FUNCIONES DE TEMA ==========
+function initTheme() {
+    console.log('🎨 Inicializando tema...');
+    
+    const savedTheme = localStorage.getItem('theme');
+    console.log('Tema guardado en localStorage:', savedTheme);
+    
+    const body = document.body;
+    const html = document.documentElement;
+    
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        html.classList.add('dark-mode');
+        updateThemeIcon(true);
+        console.log('✅ Tema oscuro aplicado');
+    } else {
+        body.classList.remove('dark-mode');
+        html.classList.remove('dark-mode');
         updateThemeIcon(false);
+        console.log('✅ Tema claro aplicado');
     }
 }
 
 function toggleTheme() {
+    console.log('🔄 Cambiando tema...');
+    
     const body = document.body;
+    const html = document.documentElement;
     const isDark = body.classList.toggle('dark-mode');
     
-    // Guardar preferencia en localStorage
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    if (isDark) {
+        html.classList.add('dark-mode');
+    } else {
+        html.classList.remove('dark-mode');
+    }
     
-    // Actualizar icono
+    console.log('Nuevo tema:', isDark ? 'dark' : 'light');
+    
+    try {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        console.log('💾 Tema guardado:', isDark ? 'dark' : 'light');
+    } catch (e) {
+        console.error('❌ Error al guardar tema:', e);
+    }
+    
     updateThemeIcon(isDark);
-    
-    // Animación suave
-    body.style.transition = 'all 0.3s ease';
+    setTimeout(updateChartsTheme, 100);
 }
 
 function updateThemeIcon(isDark) {
@@ -171,13 +70,15 @@ function updateThemeIcon(isDark) {
     if (themeToggle) {
         themeToggle.textContent = isDark ? '☀️' : '🌙';
         themeToggle.title = isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+        console.log('🔄 Icono actualizado:', isDark ? '☀️' : '🌙');
     }
 }
 
 // ========== GRÁFICOS ==========
 const gastosPorCategoria = window.gastosPorCategoria || [];
+let lineChart = null;
+let pieChart = null;
 
-// Configuración de colores para Chart.js según el tema
 function getChartColors() {
     const isDark = document.body.classList.contains('dark-mode');
     return {
@@ -187,37 +88,68 @@ function getChartColors() {
     };
 }
 
-// Gráfico de línea
-if (document.getElementById('lineChart')) {
-    const colors = getChartColors();
+// Gráfico de línea con interacción
+function createOrUpdateLineChart() {
+    const canvas = document.getElementById('lineChart');
+    if (!canvas) return;
     
-    const ctxLine = document.getElementById('lineChart').getContext('2d');
-    new Chart(ctxLine, {
+    const colors = getChartColors();
+    const ctx = canvas.getContext('2d');
+    
+    const evolucion = window.evolucionDatos || {
+        labels: ['Sin datos'],
+        ingresos: [0],
+        gastos: [0]
+    };
+    
+    // Destruir gráfico anterior si existe
+    if (lineChart) {
+        lineChart.destroy();
+    }
+    
+    lineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['31 dic', '04 ene', '06 ene', '09 ene', '11 ene', '14 ene', '17 ene', '19 ene'],
+            labels: evolucion.labels,
             datasets: [
                 {
                     label: 'Ingresos',
-                    data: [1000, 0, 0, 0, 0, 0, 0, 1000],
+                    data: evolucion.ingresos,
                     borderColor: '#5fd3bc',
                     backgroundColor: 'rgba(95, 211, 188, 0.1)',
                     tension: 0.4,
-                    fill: true
+                    fill: true,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#5fd3bc',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
                 },
                 {
                     label: 'Gastos',
-                    data: [1000, 100, 50, 80, 120, 90, 110, 500],
+                    data: evolucion.gastos,
                     borderColor: '#ff7a59',
                     backgroundColor: 'rgba(255, 122, 89, 0.1)',
                     tension: 0.4,
-                    fill: true
+                    fill: true,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#ff7a59',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
                 }
             ]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
+            aspectRatio: 2.2,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
             plugins: {
                 legend: {
                     display: true,
@@ -225,7 +157,31 @@ if (document.getElementById('lineChart')) {
                     labels: {
                         color: colors.textColor,
                         usePointStyle: true,
-                        padding: 15
+                        padding: 15,
+                        font: {
+                            size: 12,
+                            family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                        }
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: colors.backgroundColor,
+                    titleColor: colors.textColor,
+                    bodyColor: colors.textColor,
+                    borderColor: colors.gridColor,
+                    borderWidth: 1,
+                    padding: 12,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += 'S/. ' + context.parsed.y.toFixed(2);
+                            return label;
+                        }
                     }
                 }
             },
@@ -233,10 +189,17 @@ if (document.getElementById('lineChart')) {
                 y: {
                     beginAtZero: true,
                     grid: {
-                        color: colors.gridColor
+                        color: colors.gridColor,
+                        drawBorder: false
                     },
                     ticks: {
-                        color: colors.textColor
+                        color: colors.textColor,
+                        font: {
+                            size: 11
+                        },
+                        callback: function(value) {
+                            return 'S/. ' + value;
+                        }
                     }
                 },
                 x: {
@@ -244,21 +207,32 @@ if (document.getElementById('lineChart')) {
                         display: false
                     },
                     ticks: {
-                        color: colors.textColor
+                        color: colors.textColor,
+                        font: {
+                            size: 11
+                        }
                     }
                 }
             }
         }
     });
+    
+    console.log('📊 Gráfico de línea creado/actualizado');
 }
 
-// Gráfico de torta
-if (document.getElementById('pieChart') && gastosPorCategoria.length > 0) {
-    const colors = getChartColors();
+// Gráfico de torta con interacción
+function createOrUpdatePieChart() {
+    const canvas = document.getElementById('pieChart');
+    if (!canvas || gastosPorCategoria.length === 0) {
+        console.log('⚠️ No hay datos de categorías o canvas no encontrado');
+        return;
+    }
     
-    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    const colors = getChartColors();
+    const ctx = canvas.getContext('2d');
+    
     const labels = gastosPorCategoria.map(item => item.categoria_nombre);
-    const data = gastosPorCategoria.map(item => item.total);
+    const data = gastosPorCategoria.map(item => parseFloat(item.total));
     
     const backgroundColors = [
         '#4a90e2',
@@ -267,23 +241,34 @@ if (document.getElementById('pieChart') && gastosPorCategoria.length > 0) {
         '#ffa500',
         '#9b59b6',
         '#3ec8a8',
-        '#ff6b9d'
+        '#ff6b9d',
+        '#45b7d1',
+        '#f39c12',
+        '#27ae60'
     ];
     
-    new Chart(ctxPie, {
+    // Destruir gráfico anterior si existe
+    if (pieChart) {
+        pieChart.destroy();
+    }
+    
+    pieChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
                 data: data,
                 backgroundColor: backgroundColors.slice(0, labels.length),
-                borderWidth: 2,
-                borderColor: colors.backgroundColor
+                borderWidth: 3,
+                borderColor: colors.backgroundColor,
+                hoverOffset: 10,
+                hoverBorderWidth: 4
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
+            aspectRatio: 1.5,
             plugins: {
                 legend: {
                     display: true,
@@ -291,12 +276,46 @@ if (document.getElementById('pieChart') && gastosPorCategoria.length > 0) {
                     labels: {
                         color: colors.textColor,
                         usePointStyle: true,
-                        padding: 15
+                        padding: 15,
+                        font: {
+                            size: 12,
+                            family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                        }
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: colors.backgroundColor,
+                    titleColor: colors.textColor,
+                    bodyColor: colors.textColor,
+                    borderColor: colors.gridColor,
+                    borderWidth: 1,
+                    padding: 12,
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            const value = context.parsed;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((value / total) * 100).toFixed(1);
+                            label += 'S/. ' + value.toFixed(2) + ' (' + percentage + '%)';
+                            return label;
+                        }
                     }
                 }
             }
         }
     });
+    
+    console.log('📊 Gráfico de torta creado/actualizado');
+}
+
+function updateChartsTheme() {
+    console.log('🎨 Actualizando tema de gráficos...');
+    createOrUpdateLineChart();
+    createOrUpdatePieChart();
 }
 
 // ========== MODAL ==========
@@ -317,8 +336,24 @@ window.onclick = function(event) {
 
 // ========== INICIALIZACIÓN ==========
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('📄 DOM cargado completamente');
+    console.log('Estado actual del body:', document.body.className);
+    
     // Inicializar tema
     initTheme();
+    
+    // Crear gráficos
+    createOrUpdateLineChart();
+    createOrUpdatePieChart();
+    
+    // Agregar listener al botón de tema
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+        console.log('✅ Event listener agregado al botón de tema');
+    } else {
+        console.error('❌ No se encontró el botón #themeToggle');
+    }
     
     // Auto-ocultar mensajes después de 5 segundos
     const mensaje = document.querySelector('.mensaje');
@@ -328,6 +363,9 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => mensaje.remove(), 300);
         }, 5000);
     }
+    
+    console.log('✅ Inicialización completa');
+    console.log('📊 Datos de categorías:', gastosPorCategoria.length, 'categorías');
 });
 
 // Animación de salida para mensajes
@@ -345,3 +383,15 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ========== DEBUG ==========
+function checkThemeStatus() {
+    console.log('--- ESTADO DEL TEMA ---');
+    console.log('LocalStorage theme:', localStorage.getItem('theme'));
+    console.log('Body tiene dark-mode:', document.body.classList.contains('dark-mode'));
+    console.log('HTML tiene dark-mode:', document.documentElement.classList.contains('dark-mode'));
+    console.log('Body classes:', document.body.className);
+    console.log('---------------------');
+}
+
+window.checkThemeStatus = checkThemeStatus;
