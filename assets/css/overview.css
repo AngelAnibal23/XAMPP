@@ -36,7 +36,8 @@
 }
 
 /* Tema Oscuro */
-body.dark-mode {
+body.dark-mode,
+html.dark-mode body {
     --bg-body: linear-gradient(135deg, #0f1419 0%, #1a1f26 50%, #252b33 100%);
     --bg-header: linear-gradient(135deg, #1a1f26 0%, #252b33 100%);
     --bg-card: #1e2329;
@@ -257,15 +258,18 @@ body {
     background: linear-gradient(135deg, #dae9f7 0%, #c5ddf5 100%);
 }
 
-body.dark-mode .icon-green {
+body.dark-mode .icon-green,
+html.dark-mode body .icon-green {
     background: linear-gradient(135deg, rgba(95, 211, 188, 0.2) 0%, rgba(62, 200, 168, 0.2) 100%);
 }
 
-body.dark-mode .icon-red {
+body.dark-mode .icon-red,
+html.dark-mode body .icon-red {
     background: linear-gradient(135deg, rgba(255, 94, 58, 0.2) 0%, rgba(255, 122, 89, 0.2) 100%);
 }
 
-body.dark-mode .icon-blue {
+body.dark-mode .icon-blue,
+html.dark-mode body .icon-blue {
     background: linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(53, 122, 189, 0.2) 100%);
 }
 
@@ -304,13 +308,27 @@ body.dark-mode .icon-blue {
     border-radius: 1.25rem;
     box-shadow: var(--shadow-card);
     transition: background 0.3s ease;
+    min-height: 350px;
+    max-height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-card canvas {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .chart-title {
     font-size: 1.25rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--text-primary);
+    flex-shrink: 0;
+    height: auto;
 }
 
 /* ========== COLUMNA DERECHA: TRANSACCIONES ========== */
@@ -483,11 +501,13 @@ body.dark-mode .icon-blue {
     transform: scale(1.1);
 }
 
-body.dark-mode .btn-delete {
+body.dark-mode .btn-delete,
+html.dark-mode body .btn-delete {
     background: rgba(255, 94, 58, 0.2);
 }
 
-body.dark-mode .btn-delete:hover {
+body.dark-mode .btn-delete:hover,
+html.dark-mode body .btn-delete:hover {
     background: #ff5e3a;
 }
 
@@ -667,12 +687,14 @@ body.dark-mode .btn-delete:hover {
     color: #c33;
 }
 
-body.dark-mode .mensaje {
+body.dark-mode .mensaje,
+html.dark-mode body .mensaje {
     background: linear-gradient(135deg, rgba(95, 211, 188, 0.2) 0%, rgba(62, 200, 168, 0.2) 100%);
     color: #5fd3bc;
 }
 
-body.dark-mode .mensaje.error {
+body.dark-mode .mensaje.error,
+html.dark-mode body .mensaje.error {
     background: linear-gradient(135deg, rgba(255, 94, 58, 0.2) 0%, rgba(255, 122, 89, 0.2) 100%);
     color: #ff7a59;
 }
