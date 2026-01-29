@@ -32,7 +32,7 @@ function createOrUpdateLineChart() {
         gastos: [900, 85, 65, 120, 45, 230, 150, 100]
     };
 
-    // ✅ SI YA EXISTE, ACTUALIZA COLORES Y RESIZE
+    // ✅ SI YA EXISTE, SOLO ACTUALIZA COLORES (NO OPTIONS COMPLETO)
     if (lineChart) {
         lineChart.options.plugins.legend.labels.color = c.text;
         lineChart.options.plugins.tooltip.backgroundColor = c.tooltipBg;
@@ -43,9 +43,8 @@ function createOrUpdateLineChart() {
         lineChart.options.scales.y.ticks.color = c.text;
         lineChart.options.scales.y.grid.color = c.grid;
         
-        lineChart.resize(); // ✅ ESTO FUERZA EL RECÁLCULO DEL TAMAÑO
         lineChart.update();
-        return;
+        return; // ✅ IMPORTANTE: RETURN AQUÍ
     }
 
     // ✅ CREAR GRÁFICO POR PRIMERA VEZ
@@ -106,6 +105,7 @@ function createOrUpdateLineChart() {
                             weight: '600'
                         }
                     }
+                    // ✅ NO TOCAR onClick - Chart.js lo maneja automáticamente
                 },
                 tooltip: {
                     backgroundColor: c.tooltipBg,
@@ -143,11 +143,6 @@ function createOrUpdateLineChart() {
             }
         }
     });
-
-    // ✅ FORZAR RESIZE DESPUÉS DE CREAR
-    setTimeout(() => {
-        if (lineChart) lineChart.resize();
-    }, 100);
 }
 
 // ================== PIE / DOUGHNUT ==================
@@ -165,7 +160,7 @@ function createOrUpdatePieChart() {
         ? gastosPorCategoria.map(i => Number(i.total))
         : [53, 15, 11, 8, 7, 4, 3];
 
-    // ✅ SI YA EXISTE, ACTUALIZA COLORES Y RESIZE
+    // ✅ SI YA EXISTE, SOLO ACTUALIZA COLORES
     if (pieChart) {
         pieChart.options.plugins.legend.labels.color = c.text;
         pieChart.options.plugins.tooltip.backgroundColor = c.tooltipBg;
@@ -174,9 +169,8 @@ function createOrUpdatePieChart() {
         pieChart.options.plugins.tooltip.borderColor = c.grid;
         pieChart.data.datasets[0].borderColor = c.background;
         
-        pieChart.resize(); // ✅ ESTO FUERZA EL RECÁLCULO DEL TAMAÑO
         pieChart.update();
-        return;
+        return; // ✅ IMPORTANTE: RETURN AQUÍ
     }
 
     // ✅ CREAR GRÁFICO POR PRIMERA VEZ
@@ -230,11 +224,6 @@ function createOrUpdatePieChart() {
             }
         }
     });
-
-    // ✅ FORZAR RESIZE DESPUÉS DE CREAR
-    setTimeout(() => {
-        if (pieChart) pieChart.resize();
-    }, 100);
 }
 
 // ================== UPDATE POR CAMBIO DE TEMA ==================
@@ -242,9 +231,3 @@ function updateChartsTheme() {
     createOrUpdateLineChart();
     createOrUpdatePieChart();
 }
-
-// ✅ AGREGAR LISTENER PARA RESIZE DE VENTANA
-window.addEventListener('resize', () => {
-    if (lineChart) lineChart.resize();
-    if (pieChart) pieChart.resize();
-});
