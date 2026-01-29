@@ -233,6 +233,8 @@ $categorias = obtenerCategorias($usuario_id);
         };
     </script>
     
-    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/charts.js"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>
