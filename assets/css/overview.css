@@ -106,6 +106,69 @@ body {
     font-size: 0.875rem;
 }
 
+.btn-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 10px;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.15s ease;
+}
+
+
+/* Hover */
+
+.btn-logout:hover {
+    box-shadow: 0 6px 16px rgba(220, 53, 69, 0.25);
+}
+
+.btn-logout:active {
+    transform: scale(0.96);
+}
+/* Icono */
+
+.btn-logout .icon {
+    display: flex;
+    align-items: center;
+}
+
+.btn-logout svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;   /* HEREDA EL COLOR DEL BOTÓN */
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+
+body.dark-mode .btn-logout,
+html.dark-mode body .btn-logout {
+    background: rgba(255, 94, 58, 0.15);
+    border: 1.5px solid rgba(255, 94, 58, 0.4);
+    color: #ff7a59;
+}
+
+
+body:not(.dark-mode) .btn-logout {
+    background: rgba(220, 53, 69, 0.12);   /* MÁS visible */
+    border: 1.5px solid rgba(220, 53, 69, 0.45);
+    color: #d64545;
+}
+
+
 /* ========== BOTÓN DE TEMA ========== */
 .theme-toggle {
     background: rgba(255, 255, 255, 0.1);
@@ -666,6 +729,8 @@ html.dark-mode body .btn-delete:hover {
 .btn-submit:active {
     transform: translateY(0);
 }
+
+
 
 /* ========== MENSAJE ========== */
 .mensaje {
