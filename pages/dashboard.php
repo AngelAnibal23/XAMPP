@@ -58,6 +58,16 @@ $categorias = obtenerCategorias($usuario_id);
                 <span>+</span>
                 Nueva Transacción
             </button>
+            <button class="btn-logout" onclick="cerrarSesion()">
+                <span class="icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M10 17v-2h4v-6h-4V7l-5 5 5 5z"/>
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4v-2h4V5h-4z"/>
+                    </svg>
+                </span>
+                Cerrar sesión
+            </button>
+           
         </div>
     </header>
 
@@ -107,7 +117,7 @@ $categorias = obtenerCategorias($usuario_id);
                         </div>
                         <div class="stat-amount amount-blue">S/.<?php echo number_format($estadisticas['balance'], 2); ?> </div>
                         <div class="stat-label">Saldo disponible</div>
-                    </div>
+                    </div> 
                 </div>
 
                 <!-- Gráficos -->
