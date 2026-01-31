@@ -102,6 +102,6 @@ header("Expires: 0");
     unset($_SESSION['active_form']); 
     ?>
     </div>
-    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>
