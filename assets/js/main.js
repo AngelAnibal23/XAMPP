@@ -32,6 +32,24 @@ document.querySelectorAll('.form-content').forEach(form => {
     event.target.classList.add('active');           
 
 
+window.addEventListener('pageshow', function(event) {
+    // Si la página viene del cache (botón atrás)
+    if (event.persisted) {
+        // Limpiar todos los formularios
+        document.querySelectorAll('form').forEach(form => {
+            form.reset();
+        });
+    }
+});
+
+// Limpiar formularios cuando se carga la página normalmente
+window.addEventListener('load', function() {
+    document.querySelectorAll('form').forEach(form => {
+        form.reset();
+    });
+});
+
+
 // ========== LOGOUT ==========
 
 function cerrarSesion() {
